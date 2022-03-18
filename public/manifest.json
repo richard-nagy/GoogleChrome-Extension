@@ -1,0 +1,11 @@
+{
+	"manifest_version": 2,
+	"name": "Unnamed Chrome Extension",
+	"version": "1.1.0",
+	"version_name": "1.1.0-develop",
+	"description": "",
+	"browser_action": {
+		"default_popup": "index.html",
+		"default_title": "Document"
+	}
+}
