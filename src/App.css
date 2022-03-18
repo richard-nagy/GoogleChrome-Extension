@@ -33,26 +33,24 @@ img {
 	display: none;
 }
 
-.add {
-	background-color: green;
+label {
+	font-size: 14px;
+	padding: 3px;
+	margin: 0;
+	color: white;
 	border-bottom: 1px solid black;
 	border-right: 1px solid black;
 	border-top: 1px solid gray;
 	border-left: 1px solid gray;
-	padding: 3px;
-	margin-left: 5px;
-	color: white;
+}
+
+.add {
+	background-color: green;
+  margin: 0 4px 0 3px;
 }
 
 .remove {
 	background-color: red;
-	border-bottom: 1px solid black;
-	border-right: 1px solid black;
-	border-top: 1px solid gray;
-	border-left: 1px solid gray;
-	padding: 3px;
-	margin: 0;
-	color: white;
 }
 
 .div {
