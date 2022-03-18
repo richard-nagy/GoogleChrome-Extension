@@ -1,4 +1,4 @@
-import "./style.css";
+import "./App.css";
 import $ from "jquery";
 
 function renderImages() {
@@ -42,7 +42,7 @@ $(document).ready(function () {
 
 function App() {
 	return (
-		<div>
+		<div id="body">
 			<div class="div">
 				<input id="img0" class="hidden" type="file" />
 				<div id="imagearea0" class="imagearea"></div>
