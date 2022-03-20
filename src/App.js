@@ -1,67 +1,66 @@
 import "./App.css";
-import $ from "jquery";
-
-function renderImages() {
-	for (let i = 0; i < 6; i++) {
-		let img = new Image();
-		img.src = localStorage["image" + i];
-		$("#imagearea" + i).html(img);
-		$("body").on("change", "#img" + i, function () {
-			var fileInput = $(this)[0];
-			var file = fileInput.files[0];
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				var img_ = new Image();
-				img_.src = reader.result;
-				localStorage["image" + i] = reader.result;
-				$("#imagearea" + i).html(img_);
-			};
-			reader.readAsDataURL(file);
-		});
-	}
-}
-
-document.addEventListener(
-	"DOMContentLoaded",
-	function () {
-		for (let i = 0; i < 6; i++) {
-			document.querySelector("#image" + i).addEventListener("click", onclick, false);
-			function onclick() {
-				localStorage.removeItem("image" + i);
-				$("#imagearea" + i).html(null);
-				renderImages();
-			}
-		}
-	},
-	false
-);
-
-$(document).ready(function () {
-	renderImages();
-});
-
-function renderElements() {
-	let array = [];
-	for (let i = 0; i < 6; i++) {
-		array.push(
-			<div className="div">
-				<input id={"img" + i} className="hidden" type="file" />
-				<div id={"imagearea" + i} className="imagearea"></div>
-				<span>
-					<label htmlFor={"img" + i} className="add">
-						Add
-					</label>
-					<label className="remove" id={"image" + i}>
-						Remove
-					</label>
-				</span>
-			</div>
-		);
-	}
-	return array;
-}
+import { useEffect, useState } from "react";
 
 function App() {
+	const [obj, setObj] = useState(JSON.parse(localStorage.getItem("myArray")));
+
+	// Update localStorage on state change
+	useEffect(() => {
+		localStorage.setItem("myArray", JSON.stringify(obj));
+	}, [obj]);
+
+	// Add image
+	function addImage(e) {
+		var file = e[0];
+		var reader = new FileReader();
+		reader.onload = function () {
+			var img_ = new Image();
+			img_.src = reader.result;
+			setObj((obj) => [...obj, reader.result]);
+		};
+		reader.readAsDataURL(file);
+	}
+
+	// Delete image
+	function deleteButton(id) {
+		setObj(obj.filter((e, i) => i !== id));
+	}
+
+	// Render elemens
+	function renderElements() {
+		let array = [];
+
+		for (let i = 0; i < obj.length + 1; i++) {
+			array.push(
+				<div className="div" key={i}>
+					<input
+						id={"img" + i}
+						className="hidden"
+						type="file"
+						onChange={(e) => addImage(e.target.files)}
+					/>
+					<div id={"imagearea" + i} className="imagearea">
+						<img src={obj[i]} alt={obj[i]} />
+					</div>
+					<span>
+						<label htmlFor={"img" + i} className="add">
+							Add
+						</label>
+						<label
+							className="remove"
+							onClick={() => {
+								deleteButton(i);
+							}}
+						>
+							Remove
+						</label>
+					</span>
+				</div>
+			);
+		}
+		return array;
+	}
+
 	return <div id="body">{renderElements()}</div>;
 }
 
