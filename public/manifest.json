@@ -2,7 +2,6 @@
 	"manifest_version": 2,
 	"name": "Pic-Tour",
 	"version": "1.1.0",
-	"version_name": "1.1.0-develop",
 	"description": "Google Chrome extension to store and quickly acces images.",
 	"browser_action": {
 		"default_popup": "index.html",
