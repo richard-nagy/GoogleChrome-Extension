@@ -30,7 +30,7 @@ function App() {
 	function renderElements() {
 		let array = [];
 
-		for (let i = 0; i < obj.length + 1; i++) {
+		for (let i = 0; i < obj.length; i++) {
 			array.push(
 				<div className="image" key={i}>
 					<input
@@ -58,6 +58,17 @@ function App() {
 				</div>
 			);
 		}
+		array.push(
+			<div>
+				<input
+					id={"img"}
+					className="hidden"
+					type="file"
+					onChange={(e) => addImage(e.target.files)}
+				/>
+				<label htmlFor={"img"} class="button_plus" />
+			</div>
+		);
 		return array;
 	}
 
