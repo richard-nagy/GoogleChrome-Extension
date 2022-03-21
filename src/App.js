@@ -42,13 +42,19 @@ function App() {
 					<div id={"imagearea" + i} className="imagearea">
 						<img src={obj[i]} alt={obj[i]} />
 					</div>
-					<label htmlFor={"img" + i} className="button add" />
-					<div
-						className="button remove"
-						onClick={() => {
-							deleteButton(i);
-						}}
-					/>
+					<div className="bottom">
+						<label htmlFor={"img" + i} className="button add">
+							✎
+						</label>
+						<div
+							className="button remove"
+							onClick={() => {
+								deleteButton(i);
+							}}
+						>
+							🗑
+						</div>
+					</div>
 				</div>
 			);
 		}
