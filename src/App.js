@@ -1,5 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import { copyImageToClipboard } from "copy-image-clipboard";
 
 export default function App() {
 	// Get images from localstorage
@@ -39,6 +40,13 @@ export default function App() {
 		reader.readAsDataURL(file);
 	}
 
+	// Copy image on clicks
+	function copy(file) {
+		copyImageToClipboard(file).catch((e) => {
+			console.log("Error: ", e.message);
+		});
+	}
+
 	// Render elemens
 	function renderElements() {
 		// Array that contains elements
@@ -60,7 +68,13 @@ export default function App() {
 						onChange={(e) => changeImage(e.target.files, i)}
 					/>
 					<div className="imageArea">
-						<img src={array[i]} alt={array[i]} className={borderRadius} />
+						<img
+							id={i}
+							src={array[i]}
+							alt={array[i]}
+							className={borderRadius}
+							onClick={() => copy(array[i])}
+						/>
 					</div>
 					<div className="bottom">
 						<label htmlFor={"img" + i} className="button add">
