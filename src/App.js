@@ -32,7 +32,7 @@ function App() {
 
 		for (let i = 0; i < obj.length + 1; i++) {
 			array.push(
-				<div className="div" key={i}>
+				<div className="image" key={i}>
 					<input
 						id={"img" + i}
 						className="hidden"
@@ -42,19 +42,13 @@ function App() {
 					<div id={"imagearea" + i} className="imagearea">
 						<img src={obj[i]} alt={obj[i]} />
 					</div>
-					<span>
-						<label htmlFor={"img" + i} className="add">
-							Add
-						</label>
-						<label
-							className="remove"
-							onClick={() => {
-								deleteButton(i);
-							}}
-						>
-							Remove
-						</label>
-					</span>
+					<label htmlFor={"img" + i} className="button add" />
+					<div
+						className="button remove"
+						onClick={() => {
+							deleteButton(i);
+						}}
+					/>
 				</div>
 			);
 		}
