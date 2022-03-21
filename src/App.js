@@ -16,7 +16,7 @@ function App() {
 		reader.onload = function () {
 			var img_ = new Image();
 			img_.src = reader.result;
-			setObj((obj) => [...obj, reader.result]);
+			obj != null ? setObj((obj) => [...obj, reader.result]) : setObj([reader.result]);
 		};
 		reader.readAsDataURL(file);
 	}
@@ -30,7 +30,13 @@ function App() {
 	function renderElements() {
 		let array = [];
 
-		for (let i = 0; i < obj.length; i++) {
+		for (let i = 0; obj != null && i < obj.length; i++) {
+			let borderRadius = "";
+
+			const img = new Image();
+			img.src = obj[i];
+			if (img.width >= img.height) borderRadius = "borderRadius";
+
 			array.push(
 				<div className="image" key={i}>
 					<input
@@ -40,7 +46,7 @@ function App() {
 						onChange={(e) => addImage(e.target.files)}
 					/>
 					<div id={"imagearea" + i} className="imagearea">
-						<img src={obj[i]} alt={obj[i]} />
+						<img src={obj[i]} alt={obj[i]} className={borderRadius} />
 					</div>
 					<div className="bottom">
 						<label htmlFor={"img" + i} className="button add">
@@ -52,12 +58,13 @@ function App() {
 								deleteButton(i);
 							}}
 						>
-							🗑
+							✖
 						</div>
 					</div>
 				</div>
 			);
 		}
+
 		array.push(
 			<div>
 				<input
@@ -66,7 +73,7 @@ function App() {
 					type="file"
 					onChange={(e) => addImage(e.target.files)}
 				/>
-				<label htmlFor={"img"} class="button_plus" />
+				<label htmlFor={"img"} className="button_plus" />
 			</div>
 		);
 		return array;
