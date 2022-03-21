@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 
 export default function App() {
 	// Get images from localstorage
-	const [obj, setObj] = useState(JSON.parse(localStorage.getItem("images")));
+	const [array, setArray] = useState(JSON.parse(localStorage.getItem("images")));
 
 	// Update localStorage on state change
 	useEffect(() => {
-		localStorage.setItem("images", JSON.stringify(obj));
-	}, [obj]);
+		localStorage.setItem("images", JSON.stringify(array));
+	}, [array]);
 
 	// Add image
 	function addImage(e) {
@@ -17,38 +17,50 @@ export default function App() {
 		reader.onload = function () {
 			var img_ = new Image();
 			img_.src = reader.result;
-			obj != null ? setObj((obj) => [...obj, reader.result]) : setObj([reader.result]);
+			array != null ? setArray((obj) => [...obj, reader.result]) : setArray([reader.result]);
 		};
 		reader.readAsDataURL(file);
 	}
 
 	// Delete image
-	function deleteButton(id) {
-		setObj(obj.filter((e, i) => i !== id));
+	function deleteImage(id) {
+		setArray(array.filter((e, i) => i !== id));
+	}
+
+	// Change image
+	function changeImage(e, i) {
+		var file = e[0];
+		var reader = new FileReader();
+		reader.onload = function () {
+			var img_ = new Image();
+			img_.src = reader.result;
+			setArray((obj) => [...array.filter((_, j) => j !== i), (obj[i] = reader.result)]);
+		};
+		reader.readAsDataURL(file);
 	}
 
 	// Render elemens
 	function renderElements() {
 		// Array that contains elements
-		let array = [];
+		let elements = [];
 
-		for (let i = 0; obj != null && i < obj.length; i++) {
+		for (let i = 0; array != null && i < array.length; i++) {
 			// If image is wider than taller give it the borderRadius class
 			let borderRadius = "";
 			const img = new Image();
-			img.src = obj[i];
+			img.src = array[i];
 			if (img.width >= img.height) borderRadius = "borderRadius";
 
-			array.push(
+			elements.push(
 				<div className="imageBox" key={i}>
 					<input
 						id={"img" + i}
 						className="hidden"
 						type="file"
-						onChange={(e) => addImage(e.target.files)}
+						onChange={(e) => changeImage(e.target.files, i)}
 					/>
 					<div className="imageArea">
-						<img src={obj[i]} alt={obj[i]} className={borderRadius} />
+						<img src={array[i]} alt={array[i]} className={borderRadius} />
 					</div>
 					<div className="bottom">
 						<label htmlFor={"img" + i} className="button add">
@@ -57,7 +69,7 @@ export default function App() {
 						<div
 							className="button remove"
 							onClick={() => {
-								deleteButton(i);
+								deleteImage(i);
 							}}
 						>
 							✖
@@ -68,7 +80,7 @@ export default function App() {
 		}
 
 		// Add a plus button to the end of the images
-		array.push(
+		elements.push(
 			<div>
 				<input
 					id={"img"}
@@ -79,7 +91,7 @@ export default function App() {
 				<label htmlFor={"img"} className="plusButton" />
 			</div>
 		);
-		return array;
+		return elements;
 	}
 
 	return <div id="body">{renderElements()}</div>;
