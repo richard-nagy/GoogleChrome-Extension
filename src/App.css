@@ -1,3 +1,4 @@
+/* Body */
 #body {
 	width: 330px;
 	height: 300px;
@@ -15,16 +16,14 @@
 	overflow-y: scroll;
 }
 
-img {
-	max-width: 100px;
-	max-height: 100px;
+/* Images */
+.imageBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
-.borderRadius {
-	border-radius: 5px 5px 0 0;
-}
-
-.imagearea {
+.imageArea {
 	max-width: 100px;
 	max-height: 100px;
 	display: flex;
@@ -34,8 +33,23 @@ img {
 	border-radius: 10px 10px 0 0;
 }
 
+img {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.bottom {
+	max-height: 50px;
+	background-color: #0000004c;
+	border-radius: 0 0 10px 10px;
+}
+
 .hidden {
 	display: none;
+}
+
+.borderRadius {
+	border-radius: 5px 5px 0 0;
 }
 
 .button {
@@ -56,31 +70,20 @@ img {
 	color: white;
 }
 
-.add:hover,
-.remove:hover {
-	background-color: #0000004c;
-	cursor: pointer;
-}
-
 .remove {
 	width: 20px;
 	height: 20px;
 	float: right;
 }
 
-.image {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
-.bottom {
-	max-height: 50px;
+.add:hover,
+.remove:hover {
 	background-color: #0000004c;
-	border-radius: 0 0 10px 10px;
+	cursor: pointer;
 }
 
-.button_plus {
+/* Plus Button */
+.plusButton {
 	display: block;
 	position: relative;
 	width: 100px;
@@ -91,7 +94,7 @@ img {
 	border-radius: 10px;
 }
 
-.button_plus:after {
+.plusButton:after {
 	content: "";
 	position: absolute;
 	transform: translate(-50%, -50%);
@@ -102,7 +105,7 @@ img {
 	left: 50%;
 }
 
-.button_plus:before {
+.plusButton:before {
 	content: "";
 	position: absolute;
 	top: 50%;
@@ -113,10 +116,11 @@ img {
 	width: 7px;
 }
 
-.button_plus:hover {
+.plusButton:hover {
 	background-color: #0000007f;
 }
 
+/* Scroll Bar */
 #body::-webkit-scrollbar-track {
 	background-color: #00000019;
 }

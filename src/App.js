@@ -1,12 +1,13 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 
-function App() {
-	const [obj, setObj] = useState(JSON.parse(localStorage.getItem("myArray")));
+export default function App() {
+	// Get images from localstorage
+	const [obj, setObj] = useState(JSON.parse(localStorage.getItem("images")));
 
 	// Update localStorage on state change
 	useEffect(() => {
-		localStorage.setItem("myArray", JSON.stringify(obj));
+		localStorage.setItem("images", JSON.stringify(obj));
 	}, [obj]);
 
 	// Add image
@@ -28,24 +29,25 @@ function App() {
 
 	// Render elemens
 	function renderElements() {
+		// Array that contains elements
 		let array = [];
 
 		for (let i = 0; obj != null && i < obj.length; i++) {
+			// If image is wider than taller give it the borderRadius class
 			let borderRadius = "";
-
 			const img = new Image();
 			img.src = obj[i];
 			if (img.width >= img.height) borderRadius = "borderRadius";
 
 			array.push(
-				<div className="image" key={i}>
+				<div className="imageBox" key={i}>
 					<input
 						id={"img" + i}
 						className="hidden"
 						type="file"
 						onChange={(e) => addImage(e.target.files)}
 					/>
-					<div id={"imagearea" + i} className="imagearea">
+					<div className="imageArea">
 						<img src={obj[i]} alt={obj[i]} className={borderRadius} />
 					</div>
 					<div className="bottom">
@@ -65,6 +67,7 @@ function App() {
 			);
 		}
 
+		// Add a plus button to the end of the images
 		array.push(
 			<div>
 				<input
@@ -73,7 +76,7 @@ function App() {
 					type="file"
 					onChange={(e) => addImage(e.target.files)}
 				/>
-				<label htmlFor={"img"} className="button_plus" />
+				<label htmlFor={"img"} className="plusButton" />
 			</div>
 		);
 		return array;
@@ -81,5 +84,3 @@ function App() {
 
 	return <div id="body">{renderElements()}</div>;
 }
-
-export default App;
